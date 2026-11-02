@@ -54,7 +54,45 @@ body.editing #ed,body.editing #edp{display:flex}
 #mpm small{opacity:.75;font-weight:400}
 #mps{min-height:18px;color:#ff9aa8}
 #mpb{position:fixed;left:14px;top:calc(96px + env(safe-area-inset-top,0px));display:none;color:#fff;font:700 12px/1.45 system-ui;text-shadow:0 1px 3px #000;pointer-events:none;background:rgba(0,0,0,.32);padding:6px 10px;border-radius:10px}
-</style></head><body>
+
+/* ---- painel inicial ---- */
+body.intro>*:not(canvas):not(#ini):not(#mpm){visibility:hidden}
+#ini{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;box-sizing:border-box;overflow:auto;touch-action:manipulation;color:#fff;font:600 14px system-ui,sans-serif;
+ padding:max(12px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) max(12px,env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+ background:radial-gradient(ellipse at 18% 28%,rgba(255,79,216,.3),transparent 55%),radial-gradient(ellipse at 88% 82%,rgba(95,227,255,.3),transparent 55%),linear-gradient(rgba(12,8,30,.5),rgba(12,8,30,.8))}
+#ini.off{display:none}
+#ini .ib{display:flex;align-items:center;justify-content:center;gap:clamp(16px,5vw,56px);flex-wrap:wrap;width:100%;max-width:900px;margin:auto}
+#ini .il{display:flex;flex-direction:column;align-items:center}
+#ini .it{display:flex;flex-direction:column;align-items:center;font:900 clamp(38px,min(11vw,17vh),96px)/.92 Impact,'Arial Black',sans-serif;letter-spacing:2px;transform:rotate(-4deg);-webkit-text-stroke:6px #14102a;paint-order:stroke fill;text-shadow:0 6px 0 #14102a}
+#ini .it .a{color:#ffd23a}
+#ini .it .b{color:#5fe3ff;text-shadow:0 6px 0 #14102a,4px 0 0 #ff4fd8}
+#iav{display:block;height:min(300px,calc(100vh - 260px));width:auto;border:4px solid #14102a;border-radius:18px;box-shadow:0 8px 0 #14102a,0 0 28px rgba(95,227,255,.55);transform:rotate(3deg);margin-top:22px}
+@media (max-height:430px){#iav{display:none}}
+#ini .ic{background:rgba(20,16,42,.93);border:3px solid #14102a;outline:2px solid rgba(255,255,255,.3);border-radius:18px;padding:16px;width:min(330px,88vw);box-sizing:border-box;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 0 rgba(0,0,0,.45);text-align:center;max-height:calc(100vh - 24px);overflow:auto}
+#ini small{opacity:.75;font-weight:600;font-size:11px}
+#ini label{display:flex;flex-direction:column;gap:4px}
+#ini input{font:700 15px system-ui;padding:10px;border-radius:10px;border:2px solid #5fe3ff;background:#0c0a1e;color:#fff;text-align:center;width:100%;box-sizing:border-box;user-select:text;-webkit-user-select:text;min-width:0}
+#ini input:focus-visible,#ini button:focus-visible,#ini summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#ikey{text-transform:uppercase;letter-spacing:3px}
+#inm::placeholder,#ikey::placeholder{color:#8a87a8;opacity:1;letter-spacing:2px;font-weight:800}
+#ini button{font:900 17px Impact,'Arial Black',sans-serif;letter-spacing:1px;padding:11px 14px;border-radius:12px;border:3px solid #14102a;color:#14102a;cursor:pointer;box-shadow:0 4px 0 #14102a;transition:transform .08s,box-shadow .08s;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;gap:2px}
+#ini button:active{transform:translateY(3px);box-shadow:0 1px 0 #14102a}
+#ini button small{font:600 11px system-ui;letter-spacing:0;opacity:.8}
+#ini .pri{background:#ffd23a}#ini .cy{background:#5fe3ff}#ini .pk{background:#ff4fd8}
+#ini button.sc{background:rgba(255,255,255,.16);color:#fff;border-color:rgba(255,255,255,.35);box-shadow:none;font-size:14px}
+#ini .sep{display:flex;align-items:center;gap:8px;font:800 11px system-ui;letter-spacing:1.5px;opacity:.75;margin-top:2px}
+#ini .sep:before,#ini .sep:after{content:"";flex:1;height:2px;background:rgba(255,255,255,.35);border-radius:2px}
+#ini .row{display:flex;gap:8px}#ini .row #ikey{flex:1.25}#ini .row button{flex:1}
+#ierr{font-size:12px;line-height:1.35}#ierr:empty{display:none}
+#ini details{text-align:left;font-size:12px;opacity:.9}
+#ini summary{cursor:pointer;text-align:center;font-weight:700}
+#ini .hp{margin-top:6px;line-height:1.5;opacity:.85}
+.spin{width:34px;height:34px;border-radius:50%;border:4px solid rgba(255,255,255,.25);border-top-color:#ffd23a;animation:isp .8s linear infinite;margin:6px auto}
+@keyframes isp{to{transform:rotate(360deg)}}
+@keyframes ipop{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+#ini .ic{animation:ipop .4s ease-out}
+@media (prefers-reduced-motion:reduce){#ini .ic{animation:none}.spin{animation-duration:2.4s}}
+</style></head><body class="intro">
 <canvas id="c"></canvas><div id="x"></div><div id="h">WASD mover · Espaço pular · C agachar · Clique esq. atirar · Clique dir. mirar · Shift correr · R recarregar</div>
 <div id="st"></div><div id="jp">PULAR</div><div class="tb" id="fb" style="right:112px;bottom:calc(52px + env(safe-area-inset-bottom,0px))">FOGO</div><div class="tb" id="ab" style="right:24px;bottom:calc(132px + env(safe-area-inset-bottom,0px))">MIRAR</div><div class="tb" id="cb" style="right:112px;bottom:calc(132px + env(safe-area-inset-bottom,0px))">AGACHAR</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -571,7 +609,7 @@ bind('sb',()=>{tsprint=!tsprint;$('sb').classList.toggle('act',tsprint)});
 bind('fs',()=>{},()=>{const d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d);try{screen.orientation.lock('landscape').catch(()=>{})}catch(_){}}else if(document.exitFullscreen)document.exitFullscreen()});
 function enableTouch(){if(touch)return;touch=true;stE.style.display='flex';document.querySelectorAll('.tb').forEach(e=>e.style.display='flex');$('jp').style.display='flex';$('h').textContent='Analógico à esquerda · arraste à direita para olhar'}
 enableTouch();
-$('h').textContent='WASD · Espaço pular · C agachar · 1/2/3 armas · 4 kit · Q parede · R recarregar · H ajustar HUD';setTimeout(()=>{$('h').style.display='none'},7000);
+$('h').textContent='WASD · Espaço pular · C agachar · 1/2/3 armas · 4 kit · Q parede · R recarregar · H ajustar HUD';$('h').style.display='none';
 stE.addEventListener('mousedown',ev=>{ev.stopPropagation();ev.preventDefault();const b=stE.getBoundingClientRect(),cx=b.left+b.width/2,cy=b.top+b.height/2;
  const mv=e=>{let dx=e.clientX-cx,dy=e.clientY-cy;const m=Math.hypot(dx,dy),R0=55*SK();if(m>R0){dx*=R0/m;dy*=R0/m}jv.x=dx/R0;jv.y=dy/R0;kn.style.transform='translate('+dx/SK()+'px,'+dy/SK()+'px)';if(!tsprint)keys.ShiftLeft=m>R0*1.35?1:0};
  const up=()=>{jv={x:0,y:0};kn.style.transform='none';if(!tsprint)keys.ShiftLeft=0;removeEventListener('mousemove',mv);removeEventListener('mouseup',up)};
@@ -708,7 +746,7 @@ function mpWin(k){winLock=true;const m=document.getElementById('msg');m.textCont
 function mpSpawn(){let best=null,bd=-1;for(let i=0;i<40;i++){const x=(Math.random()-.5)*60,z=(Math.random()-.5)*60;if(!bFree(x,z))continue;let d=1e9;for(const id in PL){const q=PL[id].b.g.position;d=Math.min(d,Math.hypot(q.x-x,q.z-z))}if(d>bd){bd=d;best=[x,z]}}
  best=best||[0,30];px=best[0];pz=best[1];py=0;vy=0;yaw=Math.random()*6.28;pitch=0}
 function mpDie(by){mpSend({t:'k',v:ME,k:by||null});onKill(ME,by||null);pHP=PMAX;mpSpawn();invT=2.5;const m=document.getElementById('msg');if(m.textContent==='ELIMINADO'){m.style.opacity=1;setTimeout(()=>m.style.opacity=0,1400)}}
-function enterMP(){if(mpOn)return;mpOn=true;BOTSAVE=BOTS.slice();BOTS.length=0;BOTSAVE.forEach(b=>S.remove(b.g));SC[ME]=SC[ME]||{n:NAME,k:0,d:0};SC[ME].n=NAME;
+function enterMP(){if(mpOn)return;mpOn=true;introOff();BOTSAVE=BOTS.slice();BOTS.length=0;BOTSAVE.forEach(b=>S.remove(b.g));SC[ME]=SC[ME]||{n:NAME,k:0,d:0};SC[ME].n=NAME;
  mpSpawn();pHP=PMAX;kits=0;invT=2;updHp();updKit();board.style.display='block';mpBoard();menuRefresh()}
 function mpTick(dt){if(!mpOn)return;invT=Math.max(0,invT-dt);sendT+=dt;
  if(sendT>=.066){sendT=0;mpSend({t:'s',x:+px.toFixed(2),y:+py.toFixed(2),z:+pz.toFixed(2),a:+yaw.toFixed(2),p:+pitch.toFixed(2),w:cur,c:tcrouch?1:0,m:aiming?1:0,h:Math.round(pHP)})}
@@ -725,7 +763,7 @@ function mpTick(dt){if(!mpOn)return;invT=Math.max(0,invT-dt);sendT+=dt;
 // ---- conexão ----
 const genCode=()=>{const a='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let c='';for(let i=0;i<5;i++)c+=a[Math.floor(Math.random()*a.length)];return c};
 function ensurePeer(ok,bad){if(window.Peer)return ok();const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';sc.onload=()=>window.Peer?ok():bad();sc.onerror=bad;document.head.appendChild(sc)}
-function mpFail(msg){try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}toast(msg);openMenu(msg)}
+function mpFail(msg){try{history.replaceState(null,'',location.pathname+location.search)}catch(_){}if(INTRO){introMenu(msg);return}toast(msg);openMenu(msg)}
 function startHost(tries=0){ensurePeer(()=>{const code=genCode();let pr;try{pr=new Peer('agraf-'+code,{debug:0})}catch(_){mpFail('Não foi possível iniciar o multiplayer');return}peer=pr;
   pr.on('open',()=>{isHost=true;ROOM=code;joined=true;enterMP();toast('Sala criada: '+code);openMenu()});
   pr.on('error',e=>{if(e.type==='unavailable-id'&&tries<6){try{pr.destroy()}catch(_){}startHost(tries+1)}else mpFail('Erro de conexão ('+(e.type||'?')+')')});
@@ -744,7 +782,7 @@ function leaveRoom(){try{history.replaceState(null,'',location.pathname+location
 addEventListener('beforeunload',()=>{try{peer&&peer.destroy()}catch(_){}});
 // ---- menu ----
 const mm=document.createElement('div');mm.id='mpm';
-mm.innerHTML='<div class="cd"><h3>MULTIPLAYER</h3><div id="mpo"><label><small>Seu nome</small><input id="mpn" maxlength="12" autocomplete="off"></label><button id="mpc" style="margin-top:10px;width:100%">Criar sala</button><div style="margin:10px 0 4px"><small>ou entre com um código</small></div><div class="row"><input id="mpk" maxlength="6" placeholder="CÓDIGO" autocomplete="off" style="text-transform:uppercase"><button id="mpj">Entrar</button></div></div><div id="mpi" style="display:none"><small>Código da sala</small><div class="code" id="mpcode"></div><div class="row"><button class="sc" id="mpcc">Copiar código</button><button class="sc" id="mpcl">Copiar link</button></div><small>Passe o código para os amigos. Meta: '+KT+' abates.</small><button id="mpl" class="sc" style="margin-top:6px">Sair da sala</button></div><div id="mps"></div><button id="mpx" class="sc">Fechar</button></div>';
+mm.innerHTML='<div class="cd"><h3>MULTIPLAYER</h3><div id="mpo"><label><small>Seu nome</small><input id="mpn" maxlength="12" autocomplete="off"></label><button id="mpc" style="margin-top:10px;width:100%">Criar sala</button><div style="margin:10px 0 4px"><small>ou entre com um código</small></div><div class="row"><input id="mpk" maxlength="6" placeholder="CÓDIGO" autocomplete="off" style="text-transform:uppercase"><button id="mpj">Entrar</button></div><button class="sc" id="mph" style="margin-top:10px;width:100%">Menu inicial</button></div><div id="mpi" style="display:none"><small>Código da sala</small><div class="code" id="mpcode"></div><div class="row"><button class="sc" id="mpcc">Copiar código</button><button class="sc" id="mpcl">Copiar link</button></div><small>Passe o código para os amigos. Meta: '+KT+' abates.</small><button id="mpl" class="sc" style="margin-top:6px">Sair da sala</button></div><div id="mps"></div><button id="mpx" class="sc">Fechar</button></div>';
 document.body.appendChild(mm);
 ['touchstart','touchmove','touchend','keydown','keyup','keypress'].forEach(n=>mm.addEventListener(n,e=>e.stopPropagation(),{passive:true}));
 const $m=id=>document.getElementById(id);
@@ -754,7 +792,7 @@ function closeMenu(){mm.classList.remove('on')}
 const goMp=(mode,code)=>{const n=cleanName($m('mpn').value);try{localStorage.setItem('ag_name',n)}catch(_){}location.hash='mp='+mode+'&n='+encodeURIComponent(n)+(code?'&c='+code:'');location.reload()};
 $m('mpc').addEventListener('click',()=>goMp('host'));
 $m('mpj').addEventListener('click',()=>{const c=$m('mpk').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(c.length<4){$m('mps').textContent='Digite o código da sala';return}goMp('join',c)});
-$m('mpx').addEventListener('click',closeMenu);$m('mpl').addEventListener('click',leaveRoom);
+$m('mpx').addEventListener('click',closeMenu);$m('mpl').addEventListener('click',leaveRoom);$m('mph').addEventListener('click',leaveRoom);
 const cp=(t,ok)=>{try{navigator.clipboard.writeText(t).then(()=>toast(ok),()=>prompt('Copie:',t))}catch(_){prompt('Copie:',t)}};
 $m('mpcc').addEventListener('click',()=>cp(ROOM,'Código copiado'));
 $m('mpcl').addEventListener('click',()=>cp(location.href.split('#')[0]+'#mp=join&c='+ROOM,'Link copiado'));
@@ -763,7 +801,43 @@ ICO.people='<circle cx="11" cy="11" r="3.5"/><circle cx="22" cy="12" r="3"/><pat
 $('mp').innerHTML=ico('people');$('mp').style.display='flex';$('mp').querySelector('svg').style.cssText='width:20px;height:20px';
 bind('mp',()=>{},()=>openMenu());
 // ---- início automático (hash #mp=host / #mp=join&c=CODE) ----
-(function(){const q=new URLSearchParams(location.hash.slice(1)),mode=q.get('mp');if(!mode)return;if(q.get('n'))NAME=cleanName(q.get('n'));
+// ---- painel inicial (aparece antes do jogo; o mapa gira ao fundo) ----
+let INTRO=true,introT=0;const HASHQ=new URLSearchParams(location.hash.slice(1));
+if(HASHQ.get('n'))NAME=cleanName(HASHQ.get('n'));
+let introMode=(HASHQ.get('mp')&&HASHQ.get('n'))?'conn':'menu';
+const ini=document.createElement('div');ini.id='ini';
+ini.innerHTML=`<div class="ib">
+ <div class="il"><div class="it"><span class="a">ARENA</span><span class="b">GRAFITE</span></div><img id="iav" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(VNX_SVG)}"></div>
+ <div class="ic" id="icm">
+  <label><small>Seu nick</small><input id="inm" maxlength="12" autocomplete="off" placeholder="ESCOLHA SEU NICK"></label>
+  <button id="isolo" class="pri">JOGAR SOLO<small>contra 4 bots</small></button>
+  <div class="sep">PVP COM AMIGOS</div>
+  <button id="ihost" class="cy">CRIAR SALA</button>
+  <div class="row"><input id="ikey" maxlength="6" placeholder="CÓDIGO" autocomplete="off"><button id="ijoin" class="pk">ENTRAR</button></div>
+  <div id="ierr"></div>
+  <details><summary>Como jogar</summary><div class="hp"><b>PC:</b> WASD mover · Espaço pular · C agachar · Shift correr · Clique esq. atirar · Clique dir. mirar · 1/2/3 armas · Q parede · 4 kit · R recarregar · H ajustar HUD.<br><b>Celular:</b> analógico à esquerda, arraste à direita para olhar e use os botões na tela.<br><b>PvP:</b> até 8 jogadores. Vence quem chegar a ${KT} abates.</div></details>
+ </div>
+ <div class="ic" id="icc" style="display:none"><div class="spin"></div><b>Conectando à sala…</b><small>Pode levar alguns segundos.</small><button id="icx" class="sc">Cancelar</button></div>
+</div>`;
+document.body.appendChild(ini);
+const $i=id=>document.getElementById(id);
+['touchstart','touchmove','touchend','keydown','keyup','keypress','mousedown','wheel'].forEach(n=>ini.addEventListener(n,e=>e.stopPropagation(),{passive:true}));
+addEventListener('keydown',e=>{if(INTRO&&!(e.target&&e.target.tagName==='INPUT'))e.stopImmediatePropagation()},true);
+function introMenu(msg,ok){introMode='menu';$i('icm').style.display='flex';$i('icc').style.display='none';const e=$i('ierr');e.textContent=msg||'';e.style.color=ok?'#7dff5a':'#ff9aa8'}
+function introOff(){if(!INTRO)return;INTRO=false;ini.classList.add('off');document.body.classList.remove('intro');for(const k in keys)keys[k]=0;
+ const h=$i('h');h.style.display='';setTimeout(()=>{h.style.display='none'},7000)}
+if(HASHQ.get('n'))$i('inm').value=NAME;
+if(HASHQ.get('mp')==='join')$i('ikey').value=(HASHQ.get('c')||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+if(introMode==='conn'){$i('icm').style.display='none';$i('icc').style.display='flex'}
+else if(HASHQ.get('mp')==='join'&&$i('ikey').value)introMenu('Convite para a sala '+$i('ikey').value+'. Escolha seu nick e toque em ENTRAR.',1);
+const iNick=()=>{const n=$i('inm').value.trim();if(!n){introMenu('Escolha seu nick para jogar.');$i('inm').focus();return null}return cleanName(n)};
+$i('isolo').addEventListener('click',()=>{const nk=iNick();if(!nk)return;NAME=nk;try{localStorage.setItem('ag_name',NAME)}catch(_){}initAudio();introOff();
+ try{if(matchMedia('(pointer:fine)').matches)cv.requestPointerLock()}catch(_){}});
+$i('ihost').addEventListener('click',()=>{const nk=iNick();if(!nk)return;$m('mpn').value=nk;goMp('host')});
+const iJoin=()=>{const nk=iNick();if(!nk)return;const c=$i('ikey').value.toUpperCase().replace(/[^A-Z0-9]/g,'');if(c.length<4){introMenu('Digite o código da sala (4 a 6 caracteres).');$i('ikey').focus();return}$m('mpn').value=nk;goMp('join',c)};
+$i('ijoin').addEventListener('click',iJoin);$i('ikey').addEventListener('keydown',e=>{if(e.key==='Enter')iJoin()});
+$i('icx').addEventListener('click',leaveRoom);
+(function(){const q=HASHQ,mode=q.get('mp');if(!mode||!q.get('n'))return;NAME=cleanName(q.get('n'));
  if(mode==='host')startHost();else if(mode==='join')startJoin(q.get('c'))})();
 
 addEventListener('touchstart',e=>{for(const t of e.changedTouches){const c=t.target.classList;if(c&&(c.contains('tb')||t.target.id==='jp'))continue;if(t.clientX<innerWidth*.45){if(jid===null){jid=t.identifier;jo=[t.clientX,t.clientY];setStick(t.clientX,t.clientY)}}else if(lid===null){lid=t.identifier;lp=[t.clientX,t.clientY]}}},{passive:true});
@@ -775,6 +849,7 @@ function groundAt(){let g=0;for(const c of COL)if(px>c.x0-r*.6&&px<c.x1+r*.6&&pz
 function rs(){R.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();vcam.aspect=cam.aspect;vcam.updateProjectionMatrix()}addEventListener('resize',rs);rs();
 let last=performance.now();
 (function loop(n){requestAnimationFrame(loop);const dt=Math.min((n-last)/1000,.05);last=n;
+ if(INTRO){introT+=dt;const a=introT*.1;cam.fov=75;cam.updateProjectionMatrix();cam.position.set(Math.sin(a)*30,10+Math.sin(introT*.3)*1.5,Math.cos(a)*30);cam.lookAt(0,2.5,0);cam.updateMatrixWorld();SKY.update(dt);R.clear();R.render(S,cam);return}
  let f=(keys.KeyW||keys.ArrowUp?1:0)-(keys.KeyS||keys.ArrowDown?1:0)-jv.y,s=(keys.KeyD||keys.ArrowRight?1:0)-(keys.KeyA||keys.ArrowLeft?1:0)+jv.x;
  const l=Math.hypot(f,s);if(l>1){f/=l;s/=l}
  const crouching=tcrouch,sp=(crouching?3:aiming?4:(keys.ShiftLeft||tsprint)?9:6)*dt,dx=(-Math.sin(yaw)*f+Math.cos(yaw)*s)*sp,dz=(-Math.cos(yaw)*f-Math.sin(yaw)*s)*sp;
