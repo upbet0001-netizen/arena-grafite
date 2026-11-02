@@ -2,6 +2,9 @@
 <html lang="pt-BR"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
 <title>Arena Grafite</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjIzNSAyNCAxNzAgMTcwIj48Y2lyY2xlIGN4PSIzMjAiIGN5PSI5MiIgcj0iNTgiIGZpbGw9IiMxNDEwMmEiIHN0cm9rZT0iIzE0MTAyYSIgc3Ryb2tlLXdpZHRoPSIxNiIvPjxjaXJjbGUgY3g9IjMyMCIgY3k9IjkyIiByPSI1OCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNWZlM2ZmIiBzdHJva2Utd2lkdGg9IjkiLz48cGF0aCBkPSJNMzIwIDQ0djI4TTMyMCAxMTJ2MjhNMjcyIDkyaDI4TTM0MCA5MmgyOCIgc3Ryb2tlPSIjZmZkMjNhIiBzdHJva2Utd2lkdGg9IjkiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjMyMCIgY3k9IjkyIiByPSI5IiBmaWxsPSIjZmY0ZmQ4Ii8+PHBhdGggZD0iTTI5NiAxNDZ2MjJNMzMyIDE0OHYzMiIgc3Ryb2tlPSIjNWZlM2ZmIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxjaXJjbGUgY3g9IjI5NiIgY3k9IjE3MiIgcj0iNiIgZmlsbD0iIzVmZTNmZiIvPjxjaXJjbGUgY3g9IjMzMiIgY3k9IjE4NCIgcj0iNyIgZmlsbD0iIzVmZTNmZiIvPjwvc3ZnPg==">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Arena Grafite">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&display=swap">
 <style>
 :root{--bg:#7cc4ff;--chip:rgba(0,0,0,.5);--fg:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a3a66}}
@@ -66,8 +69,9 @@ body.intro>*:not(canvas):not(#ini):not(#mpm){visibility:hidden}
 #ini .it{display:flex;flex-direction:column;align-items:center;font:900 clamp(38px,min(11vw,17vh),96px)/.92 Impact,'Arial Black',sans-serif;letter-spacing:2px;transform:rotate(-4deg);-webkit-text-stroke:6px #14102a;paint-order:stroke fill;text-shadow:0 6px 0 #14102a}
 #ini .it .a{color:#ffd23a}
 #ini .it .b{color:#5fe3ff;text-shadow:0 6px 0 #14102a,4px 0 0 #ff4fd8}
-#iav{display:block;height:min(300px,calc(100vh - 260px));width:auto;border:4px solid #14102a;border-radius:18px;box-shadow:0 8px 0 #14102a,0 0 28px rgba(95,227,255,.55);transform:rotate(3deg);margin-top:22px}
-@media (max-height:430px){#iav{display:none}}
+.lg{display:block;width:min(380px,82vw);height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
+#iav{display:block;height:min(300px,calc(100vh - 500px));width:auto;border:4px solid #14102a;border-radius:18px;box-shadow:0 8px 0 #14102a,0 0 28px rgba(95,227,255,.55);transform:rotate(3deg);margin-top:22px}
+@media (max-height:640px){#iav{display:none}}
 #ini .ic{background:rgba(20,16,42,.93);border:3px solid #14102a;outline:2px solid rgba(255,255,255,.3);border-radius:18px;padding:16px;width:min(330px,88vw);box-sizing:border-box;display:flex;flex-direction:column;gap:10px;box-shadow:0 8px 0 rgba(0,0,0,.45);text-align:center;max-height:calc(100vh - 24px);overflow:auto}
 #ini small{opacity:.75;font-weight:600;font-size:11px}
 #ini label{display:flex;flex-direction:column;gap:4px}
@@ -606,7 +610,19 @@ const bind=(id,on,off)=>{const e=$(id);
 bind('fb',()=>{firing=true;initAudio()},()=>firing=false);bind('ab',()=>{if(!W[cur].melee)aiming=!aiming});bind('cb',()=>{tcrouch=!tcrouch;crUI()});bind('jp',()=>jump=true);
 bind('rb',()=>{initAudio();startReload()});
 bind('sb',()=>{tsprint=!tsprint;$('sb').classList.toggle('act',tsprint)});
-bind('fs',()=>{},()=>{const d=document.documentElement;if(!document.fullscreenElement){(d.requestFullscreen||d.webkitRequestFullscreen||function(){}).call(d);try{screen.orientation.lock('landscape').catch(()=>{})}catch(_){}}else if(document.exitFullscreen)document.exitFullscreen()});
+// tela cheia: dispara no toque (touchend) e no clique, com prefixo webkit, aviso de erro e trava em paisagem
+function toggleFS(){const d=document.documentElement,fe=document.fullscreenElement||document.webkitFullscreenElement;
+ if(fe){(document.exitFullscreen||document.webkitExitFullscreen||function(){}).call(document);return}
+ const rq=d.requestFullscreen||d.webkitRequestFullscreen||d.webkitRequestFullScreen||d.msRequestFullscreen;
+ if(!rq){toast('Sem tela cheia neste navegador. No iPhone: Compartilhar › Adicionar à Tela de Início');return}
+ try{const pr=rq.call(d,{navigationUI:'hide'});if(pr&&pr.catch)pr.catch(()=>toast('Não foi possível entrar em tela cheia'))}catch(_){toast('Não foi possível entrar em tela cheia')}}
+function fsLock(){const o=screen.orientation;try{if(document.fullscreenElement||document.webkitFullscreenElement){o&&o.lock&&o.lock('landscape').catch(()=>{})}else{o&&o.unlock&&o.unlock()}}catch(_){}}
+document.addEventListener('fullscreenchange',fsLock);document.addEventListener('webkitfullscreenchange',fsLock);
+{const fb=$('fs');let ft=0;
+ fb.addEventListener('touchstart',ev=>{fb.classList.add('on');ev.stopPropagation()},{passive:true});
+ fb.addEventListener('touchend',ev=>{fb.classList.remove('on');ev.stopPropagation();ev.preventDefault();ft=Date.now();toggleFS()},{passive:false});
+ fb.addEventListener('touchcancel',()=>fb.classList.remove('on'));
+ fb.addEventListener('click',ev=>{ev.stopPropagation();if(Date.now()-ft<700)return;toggleFS()})}
 function enableTouch(){if(touch)return;touch=true;stE.style.display='flex';document.querySelectorAll('.tb').forEach(e=>e.style.display='flex');$('jp').style.display='flex';$('h').textContent='Analógico à esquerda · arraste à direita para olhar'}
 enableTouch();
 $('h').textContent='WASD · Espaço pular · C agachar · 1/2/3 armas · 4 kit · Q parede · R recarregar · H ajustar HUD';$('h').style.display='none';
@@ -807,7 +823,7 @@ if(HASHQ.get('n'))NAME=cleanName(HASHQ.get('n'));
 let introMode=(HASHQ.get('mp')&&HASHQ.get('n'))?'conn':'menu';
 const ini=document.createElement('div');ini.id='ini';
 ini.innerHTML=`<div class="ib">
- <div class="il"><div class="it"><span class="a">ARENA</span><span class="b">GRAFITE</span></div><img id="iav" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(VNX_SVG)}"></div>
+ <div class="il"><svg class="lg" viewBox="0 0 640 380" role="img" aria-label="Arena Grafite"><defs><text id="lgA" x="320" y="262" text-anchor="middle" font-size="112" letter-spacing="4">ARENA</text><text id="lgG" x="320" y="356" text-anchor="middle" font-size="108" letter-spacing="3">GRAFITE</text></defs><circle cx="320" cy="92" r="58" fill="#14102a" stroke="#14102a" stroke-width="16"/><circle cx="320" cy="92" r="58" fill="none" stroke="#5fe3ff" stroke-width="9"/><path d="M320 44v28M320 112v28M272 92h28M340 92h28" stroke="#ffd23a" stroke-width="9" stroke-linecap="round"/><circle cx="320" cy="92" r="9" fill="#ff4fd8"/><path d="M296 146v22M332 148v32" stroke="#5fe3ff" stroke-width="8" stroke-linecap="round"/><circle cx="296" cy="172" r="6" fill="#5fe3ff"/><circle cx="332" cy="184" r="7" fill="#5fe3ff"/><circle cx="384" cy="48" r="7" fill="#ff4fd8"/><circle cx="262" cy="52" r="5" fill="#7dff5a"/><circle cx="392" cy="128" r="5" fill="#ffd23a"/><g transform="rotate(-3 320 250)" stroke-linejoin="round" font-family="Anton, Impact, 'Arial Black', sans-serif"><use href="#lgA" x="7" y="7" fill="#14102a" stroke="#14102a" stroke-width="22" opacity=".45"/><use href="#lgA" fill="#14102a" stroke="#14102a" stroke-width="22"/><use href="#lgA" fill="#fff" stroke="#fff" stroke-width="9"/><use href="#lgA" fill="#ffd23a"/><use href="#lgG" x="7" y="7" fill="#14102a" stroke="#14102a" stroke-width="22" opacity=".45"/><use href="#lgG" fill="#14102a" stroke="#14102a" stroke-width="22"/><use href="#lgG" x="5" y="5" fill="#ff4fd8" stroke="#ff4fd8" stroke-width="9"/><use href="#lgG" fill="#fff" stroke="#fff" stroke-width="9"/><use href="#lgG" fill="#5fe3ff"/></g></svg><img id="iav" alt="" src="data:image/svg+xml;utf8,${encodeURIComponent(VNX_SVG)}"></div>
  <div class="ic" id="icm">
   <label><small>Seu nick</small><input id="inm" maxlength="12" autocomplete="off" placeholder="ESCOLHA SEU NICK"></label>
   <button id="isolo" class="pri">JOGAR SOLO<small>contra 4 bots</small></button>
